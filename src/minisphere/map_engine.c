@@ -78,7 +78,6 @@ static unsigned int        s_next_person_id = 0;
 static int                 s_num_deferreds = 0;
 static int                 s_num_persons = 0;
 static struct map_trigger* s_on_trigger = NULL;
-static unsigned int        s_queued_id = 0;
 static vector_t*           s_person_list = NULL;
 static struct player*      s_players;
 static script_t*           s_render_script = NULL;
@@ -787,8 +786,6 @@ map_trigger_at(int x, int y, int layer)
 	tileset_get_size(s_map->tileset, &tile_w, &tile_h);
 	iter = vector_enum(s_map->triggers);
 	while ((trigger = iter_next(&iter))) {
-		if (trigger->z != layer && false)  // layer ignored for compatibility
-			continue;
 		bounds.x1 = trigger->x - tile_w / 2;
 		bounds.y1 = trigger->y - tile_h / 2;
 		bounds.x2 = bounds.x1 + tile_w;
@@ -820,8 +817,6 @@ map_zone_at(int x, int y, int layer, int which)
 
 	iter = vector_enum(s_map->zones);
 	while ((zone = iter_next(&iter))) {
-		if (zone->layer != layer && false)  // layer ignored for compatibility
-			continue;
 		if (is_point_in_rect(x, y, zone->bounds) && --which < 0)
 			return iter.index;
 	}
@@ -2220,8 +2215,6 @@ get_trigger_at(int x, int y, int layer, int* out_index)
 	tileset_get_size(s_map->tileset, &tile_w, &tile_h);
 	iter = vector_enum(s_map->triggers);
 	while ((trigger = iter_next(&iter))) {
-		if (trigger->z != layer && false)  // layer ignored for compatibility reasons
-			continue;
 		bounds.x1 = trigger->x - tile_w / 2;
 		bounds.y1 = trigger->y - tile_h / 2;
 		bounds.x2 = bounds.x1 + tile_w;
@@ -2247,8 +2240,6 @@ get_zone_at(int x, int y, int layer, int which, int* out_index)
 
 	iter = vector_enum(s_map->zones); i = -1;
 	while ((zone = iter_next(&iter))) {
-		if (zone->layer != layer && false)  // layer ignored for compatibility
-			continue;
 		if (is_point_in_rect(x, y, zone->bounds) && which-- == 0) {
 			found_item = zone;
 			if (out_index)

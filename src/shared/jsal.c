@@ -293,7 +293,6 @@ jsal_update(bool in_event_loop)
 	jsal_jmpbuf*       last_catch_label;
 	int                last_stack_base;
 	JsModuleRecord     module_record;
-	JsValueRef         reason_value = JS_INVALID_REFERENCE;
 	struct rejection*  rejection;
 	JsValueRef         result;
 	char*              source;

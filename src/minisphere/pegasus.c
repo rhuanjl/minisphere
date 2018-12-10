@@ -525,7 +525,6 @@ static path_t*   load_package_json           (const char* filename);
 static int       s_api_level;
 static int       s_api_level_nominal;
 static mixer_t*  s_def_mixer;
-static int       s_next_module_id = 1;
 static js_ref_t* s_screen_obj;
 
 static js_ref_t* s_key_color;
@@ -5163,7 +5162,7 @@ js_new_TextDecoder(int num_args, bool is_ctor, intptr_t magic)
 		jsal_require_object(1);
 		jsal_get_prop_string(1, "fatal");
 		jsal_get_prop_string(1, "ignoreBOM");
-		if (!jsal_is_undefined(-2));
+		if (!jsal_is_undefined(-2))
 			fatal = jsal_require_boolean(-2);
 		if (!jsal_is_undefined(-1))
 			ignore_bom = jsal_require_boolean(-1);
